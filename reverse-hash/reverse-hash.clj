@@ -5,8 +5,9 @@ t1 = t0 * 41 + index_of_first_letter
 t2 = t1 * 41 + index_of_second_letter
 ...
 t8 = t7 * 41 + index_of_8th_letter
+
 where ``index_of_nth_letter``` represents the index of the letter n of
-``le_string`` in the ``letters`` array. It's a number between 1 and 17.
+``le_string`` within the ``letters`` array. It's a number between 1 and 17.
  
 So,
 index_of_8th_letter = t8 % 41 => 8th_letter = letters[index_of_8th_letter]
