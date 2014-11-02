@@ -1,10 +1,13 @@
 (defn fibonacci [n]
-  ; Return a vector of the fibonacci series, from 1 to n
+  ; Return a vector of the fibonacci series, with terms not exceeding ``n``
   (loop [fib [1 2]]
-    (let [lst (last fib) prelast (last (butlast fib))]
-      (if (>= (+ lst prelast) n)
+    (let [l (last fib)            ; last
+          pl (last (butlast fib)) ; prelast
+          next-term (+ l pl)]     ; next term of fibonacci series
+
+      (if (>= next-term n)
         fib
-        (recur (conj fib (+ lst prelast)))))))
+        (recur (conj fib next-term))))))
 
 (defn get-even [v]
   ; Return the even numbers from a given vector ``v``
