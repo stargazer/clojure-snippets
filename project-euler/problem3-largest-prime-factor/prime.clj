@@ -5,27 +5,28 @@
     false))
 
 (defn prime? [n]
-  ; true if n is prime. false otherwise
-  (let [sqrt (Math/sqrt n)
-        divisors (for [i (range 2 sqrt) :when (= (mod n i) 0)] i)]
-    (if (empty? divisors)
+  (loop [i 2]
+    (if (>= i (Math/ceil (Math/sqrt n)))
       true
-      false)))
-
-(defn factors [n]
-  ;returns a lazy sequence with all the factors of n, from 2 until (sqrt n)
-  ; Why? Any number's prime factor cannot be greater than its square root.
-  (filter
-    (partial divisible? n)  ; partial: https://clojuredocs.org/clojure.core/partial
-    (range 2 (Math/sqrt n))))
+      (if (= (mod n i) 0)
+        false
+        (recur (inc i))))))
 
 (defn prime-factors [n]
-  ; returns a lazy sequence with the prime factors of n
-  (filter prime? (factors n)))
+  ; returns a lazy sequence of n's prime-factors
+  (for [i (range 2 (Math/ceil (Math/sqrt n))) 
+        :when (and
+                (= (mod n i) 0) 
+                (prime? i))]  
+    i))
 
-(defn largest-prime [n]
-  (apply max (prime-factors n))) ; Using ``apply max`` allows us to find the maximum value within the given list
-                                 ; http://clojuredocs.org/clojure.core/apply     
+(defn max-prime [n]
+  ; returns n's largest prime factor
+  (apply max (prime-factors n)))
 
-(println (largest-prime 13195))
-(println (largest-prime 600851475143))
+(println (max-prime 13195))
+(println (max-prime 600851475143))
+
+
+
+    
