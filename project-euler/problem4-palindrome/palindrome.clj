@@ -5,20 +5,17 @@
       (if (<= (count v) 1)
         true
         (if (= (first v) (last v))
-          (recur
-            (subvec v 1 (dec (count v))))
+          (recur (drop-last (drop 1 v)))
           false)))))
 
-
-(def palindromes
-  ; binds ``palindromes`` to a lazy sequence of palindrome numbers, 
-  ; which are product of 3-digit numbers 
-  (for [i (range 100 1000)
-        j (range 100 1000)
+(defn palindromes [n]
+  ; Returns all palindrome numbers, which are product of 2 n-digit numbers
+  (for [i (range (int (Math/pow 10 (dec n))) (int (Math/pow 10 n))) ; 10^(n-1) ~ 10^n
+        j (range (int (Math/pow 10 (dec n))) (int (Math/pow 10 n)))
         :let [product (* i j)]
         :when (ispalindrome? product) ]
     product))
 
-
-(println (apply max palindromes))
+(println (apply max (palindromes 2)))
+(println (apply max (palindromes 3)))
 
